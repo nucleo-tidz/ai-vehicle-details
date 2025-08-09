@@ -1,9 +1,7 @@
 ﻿namespace vehicle.mcp.server
 {
     using System.ComponentModel;
-
     using model;
-
     using ModelContextProtocol.Server;
 
     [McpServerToolType]
