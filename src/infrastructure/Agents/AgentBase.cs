@@ -1,4 +1,6 @@
-﻿using Azure.AI.Agents.Persistent;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using Azure.AI.Agents.Persistent;
 using Azure.AI.Projects;
 using Azure.Identity;
 
@@ -6,8 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
 using Microsoft.SemanticKernel.Agents.AzureAI;
-
-using System.Diagnostics.CodeAnalysis;
 
 namespace infrastructure.Agents
 {

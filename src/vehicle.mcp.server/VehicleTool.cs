@@ -1,16 +1,18 @@
 ﻿namespace vehicle.mcp.server
 {
     using System.ComponentModel;
+
     using model;
+
     using ModelContextProtocol.Server;
 
     [McpServerToolType]
     public class VehicleTool
     {
         [McpServerTool, Description("Get the details of vehicle by its Registration number")]
-        public VehicleModel GetVehichleDetail([Description("Registration number of the vehicle")]string registrationNumber)
+        public VehicleModel GetVehichleDetail([Description("Registration number of the vehicle")] string registrationNumber)
         {
-            return  new VehicleModel
+            return new VehicleModel
             {
                 OwnerName = "Ahmar",
                 Make = "Suzuki",

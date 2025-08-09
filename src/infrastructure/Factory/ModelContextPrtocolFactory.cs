@@ -12,7 +12,7 @@
             var clientTransport = new SseClientTransport(
                     new SseClientTransportOptions
                     {
-                        Endpoint = new Uri("https://localhost:7265"),                      
+                        Endpoint = new Uri("https://localhost:7265"),
                         TransportMode = HttpTransportMode.StreamableHttp
                     }
                 );
