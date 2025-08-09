@@ -11,7 +11,7 @@ using Microsoft.SemanticKernel.Agents.AzureAI;
 
 namespace infrastructure.Agents
 {
-    [Experimental("AI")]
+    
     public class AgentBase(Kernel kernel, IConfiguration configuration)
     {
         public (Agent, PersistentAgentsClient) GetAzureAgent(string agentId)
