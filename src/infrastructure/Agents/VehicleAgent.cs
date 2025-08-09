@@ -8,15 +8,20 @@
     using Microsoft.SemanticKernel.Agents.AzureAI;
     using Microsoft.SemanticKernel.Agents;
     using Microsoft.SemanticKernel.ChatCompletion;
+    using infrastructure.Factory;
+    using ModelContextProtocol.Client;
 
     [Experimental("AI")]
-    internal class VehicleAgent(Kernel _kernel, IConfiguration configuration) : AgentBase(_kernel, configuration), IVehicleAgent
+    internal class VehicleAgent(Kernel _kernel, IConfiguration configuration,IModelContextPrtocolFactory clientFactory) : AgentBase(_kernel, configuration), IVehicleAgent
     {
 
         public async Task<string> Execute(byte[] regitraionPlate)
         {
+            var mcpClient = await clientFactory.Create();
+            var mcpTools = await mcpClient.ListToolsAsync();
             string agentReply = string.Empty;
             var agent = base.GetAzureAgent(configuration["VehicleAgentId"]);
+            agent.Item1.Kernel.Plugins.AddFromFunctions("VehicleTool", mcpTools.Select(_ => _.AsKernelFunction()));
             AgentThread thread = new AzureAIAgentThread(agent.Item2);
             ChatMessageContentItemCollection messages = new ChatMessageContentItemCollection();
            // messages.Add(new TextContent("Get registration number from the image"));
@@ -27,7 +32,6 @@
                 agentReply = agentReply + response.Content;
             }
             return agentReply;
-
         }
     }
 }

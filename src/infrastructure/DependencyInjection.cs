@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
 using infrastructure.Agents;
+using infrastructure.Factory;
 
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,8 @@ namespace infrastructure
         {
             services
                 .AddSemanticKernel(configuration).
-                AddTransient<IVehicleAgent, VehicleAgent>();
+                AddTransient<IVehicleAgent, VehicleAgent>().
+                AddTransient<IModelContextPrtocolFactory, ModelContextPrtocolFactory>();
             return services;
         }
         public static IServiceCollection AddSemanticKernel(this IServiceCollection services, IConfiguration configuration)

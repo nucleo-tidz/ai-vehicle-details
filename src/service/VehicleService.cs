@@ -4,10 +4,9 @@
     using model;
     public class VehicleService(IVehicleAgent vehicleAgent): IVehicleService
     {
-        public async Task<VehicleModel> GetVehicleDetails(byte[] regitraionPlate)
+        public async Task<string> GetVehicleDetails(byte[] regitraionPlate)
         {           
-            string response = await vehicleAgent.Execute(regitraionPlate);  
-            return new VehicleModel(); 
+            return await vehicleAgent.Execute(regitraionPlate);           
         }
     }
    

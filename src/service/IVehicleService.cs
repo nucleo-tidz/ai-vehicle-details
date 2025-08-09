@@ -6,6 +6,6 @@
 
     public interface IVehicleService
     {
-         Task<VehicleModel> GetVehicleDetails (byte[] regitraionPlate);
+         Task<string> GetVehicleDetails (byte[] regitraionPlate);
     }
 }

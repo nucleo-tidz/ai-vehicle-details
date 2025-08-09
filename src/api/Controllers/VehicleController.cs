@@ -22,8 +22,8 @@
                 await file.CopyToAsync(memoryStream);
                 fileBytes = memoryStream.ToArray();
             }
-           await vehicleService.GetVehicleDetails(fileBytes);
-            return Ok("File uploaded successfully.");
+            var detail = await vehicleService.GetVehicleDetails(fileBytes);
+            return Ok(detail);
         }
     }
 }
