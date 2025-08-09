@@ -12,8 +12,6 @@
     using Microsoft.SemanticKernel.ChatCompletion;
 
     using ModelContextProtocol.Client;
-
-    [Experimental("AI")]
     internal class VehicleAgent(Kernel _kernel, IConfiguration configuration, IModelContextPrtocolFactory clientFactory) : AgentBase(_kernel, configuration), IVehicleAgent
     {
 
