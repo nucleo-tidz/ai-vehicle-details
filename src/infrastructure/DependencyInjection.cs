@@ -1,5 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
+using Azure.AI.Agents.Persistent;
+using Azure.AI.Projects;
+using Azure.Identity;
+
 using infrastructure.Agents;
 using infrastructure.Factory;
 
@@ -17,7 +21,7 @@ namespace infrastructure
             services
                 .AddSemanticKernel(configuration).
                 AddTransient<IVehicleAgent, VehicleAgent>().
-                AddTransient<IModelContextPrtocolFactory, ModelContextPrtocolFactory>();
+                AddTransient<IModelContextPrtocolFactory, ModelContextPrtocolFactory>().AddAgent(configuration);
             return services;
         }
         public static IServiceCollection AddSemanticKernel(this IServiceCollection services, IConfiguration configuration)
@@ -32,6 +36,30 @@ namespace infrastructure
                    "gpt-4.1");
                 return kernelBuilder.Build();
             });
+        }
+        public static IServiceCollection AddAgent(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddScoped(_ =>
+            {
+                var credential = new DefaultAzureCredential(
+                new DefaultAzureCredentialOptions
+                {
+                    ExcludeVisualStudioCredential = true,
+                    ExcludeEnvironmentCredential = true,
+                    ExcludeManagedIdentityCredential = true,
+                    ExcludeInteractiveBrowserCredential = false,
+                    ExcludeAzureCliCredential = false,
+                    ExcludeAzureDeveloperCliCredential = true,
+                    ExcludeAzurePowerShellCredential = true,
+                    ExcludeSharedTokenCacheCredential = true,
+                    ExcludeVisualStudioCodeCredential = true,
+                    ExcludeWorkloadIdentityCredential = true,
+
+                });
+                var projectClient = new AIProjectClient(new Uri(configuration["AgentProjectEndpoint"]), credential);
+                return projectClient.GetPersistentAgentsClient();
+            });
+            return services;
         }
     }
 }

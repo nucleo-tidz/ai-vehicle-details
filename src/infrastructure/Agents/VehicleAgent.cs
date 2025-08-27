@@ -1,18 +1,17 @@
 ﻿namespace infrastructure.Agents
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Threading.Tasks;
+    using Azure.AI.Agents.Persistent;
 
     using infrastructure.Factory;
-
     using Microsoft.Extensions.Configuration;
     using Microsoft.SemanticKernel;
     using Microsoft.SemanticKernel.Agents;
     using Microsoft.SemanticKernel.Agents.AzureAI;
     using Microsoft.SemanticKernel.ChatCompletion;
-
     using ModelContextProtocol.Client;
-    internal class VehicleAgent(Kernel _kernel, IConfiguration configuration, IModelContextPrtocolFactory clientFactory) : AgentBase(_kernel, configuration), IVehicleAgent
+    internal class VehicleAgent(Kernel _kernel, IConfiguration configuration, IModelContextPrtocolFactory clientFactory, PersistentAgentsClient agentsClient) 
+        : AgentBase(_kernel, agentsClient), IVehicleAgent
     {
 
         public async Task<string> Execute(byte[] regitraionPlate)
